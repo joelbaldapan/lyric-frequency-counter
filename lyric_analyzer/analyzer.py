@@ -29,6 +29,15 @@ def combine_lyrics(lyrics_list: list[str]) -> str:
 
 
 def preprocess_lyrics(lyrics: str) -> list[str]:
+    """
+    Tokenize, remove stopwords, and lemmatize lyrics.
+
+    Args:
+        lyrics (str): The lyrics text to preprocess.
+
+    Returns:
+        list[str]: A list of lemmatized words after tokenization and stopword removal.
+    """
     """Tokenize, remove stopwords, and lemmatize lyrics."""
     tokenized = word_tokenize(lyrics)
     stop_words = set(stopwords.words("english"))
@@ -40,13 +49,30 @@ def preprocess_lyrics(lyrics: str) -> list[str]:
 
 
 def get_word_frequencies(words: list[str]) -> list[tuple[str, int]]:
-    """Return sorted word frequencies."""
+    """
+    Create a frequency distribution of the words.
+
+    Args:
+        words (list[str]): A list of words to analyze.
+
+    Returns:
+        list[tuple[str, int]]: A list of tuples where each tuple contains a word and its frequency, 
+            sorted by frequency in descending order.
+    """
     fdist = FreqDist(words)
     return fdist.most_common()
 
 
 def plot_top_words(word_freqs: list[tuple[str, int]], top: int = 70):
-    """Plot the top N most frequent words."""
+    """
+    Plot a bar chart of the top N most frequent words from a list of word-frequency tuples.
+
+    Args:
+        word_freqs (list[tuple[str, int]]): A list of tuples where each tuple contains a word and its
+            corresponding frequency, sorted in descending order of frequency.
+        top (int, optional): The number of top words to display in the plot. Defaults to 70.
+
+    """
     top_words = word_freqs[:top]
     words, counts = zip(*top_words)
     plt.figure(figsize=(25, 6))
@@ -58,6 +84,7 @@ def plot_top_words(word_freqs: list[tuple[str, int]], top: int = 70):
     plt.show()
 
 if __name__ == "__main__":
+    # tests
     lyrics_list = get_artist_lyrics("The Itchyworms", 10)
     full_lyrics = combine_lyrics(lyrics_list)
     lemmatized_lyrics = preprocess_lyrics(full_lyrics)
