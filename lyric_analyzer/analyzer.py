@@ -4,6 +4,7 @@ from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from nltk.probability import FreqDist
 
 nltk.download("stopwords")
 lemmatizer = WordNetLemmatizer()
@@ -22,16 +23,21 @@ def combine_lyrics(lyrics_list: list[str]) -> str:
 
 
 if __name__ == "__main__":
-    lyrics_list = get_artist_lyrics("Bruno Mars", 2)
+    lyrics_list = get_artist_lyrics("Louie Zong", 4)
     full_lyrics = combine_lyrics(lyrics_list)
 
     tokenized_lyrics = word_tokenize(full_lyrics)
     stop_words = set(stopwords.words("english"))
 
     filtered_lyrics = [word for word in tokenized_lyrics if word.lower() not in stop_words]
-    
+    # filtered_lyrics = tokenized_lyrics
+
     lemmatized_lyrics = [lemmatizer.lemmatize(word) for word in filtered_lyrics]
     
     print(lemmatized_lyrics)
 
+    fdist = FreqDist(lemmatized_lyrics)
+    sorted_freq = fdist.most_common()
+
+    print(sorted_freq)
     
