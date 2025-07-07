@@ -3,8 +3,10 @@ import nltk
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 
 nltk.download("stopwords")
+lemmatizer = WordNetLemmatizer()
 
 def combine_lyrics(lyrics_list: list[str]) -> str:
     """Combine a list of lyrics into a single string.
@@ -28,7 +30,8 @@ if __name__ == "__main__":
 
     filtered_lyrics = [word for word in tokenized_lyrics if word.lower() not in stop_words]
     
+    lemmatized_lyrics = [lemmatizer.lemmatize(word) for word in filtered_lyrics]
     
-    print(filtered_lyrics)
+    print(lemmatized_lyrics)
 
     
