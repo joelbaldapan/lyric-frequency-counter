@@ -1,12 +1,10 @@
-from fetcher import get_artist_lyrics
-
+import matplotlib.pyplot as plt
 import nltk
+from fetcher import get_artist_lyrics
 from nltk import word_tokenize
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
 from nltk.probability import FreqDist
-
-import matplotlib.pyplot as plt
+from nltk.stem import WordNetLemmatizer
 
 nltk.download("stopwords")
 lemmatizer = WordNetLemmatizer()
@@ -29,43 +27,43 @@ def combine_lyrics(lyrics_list: list[str]) -> str:
 
 
 def preprocess_lyrics(lyrics: str) -> list[str]:
-    """
-    Tokenize, remove stopwords, and lemmatize lyrics.
+    """Tokenize, remove stopwords, and lemmatize lyrics.
 
     Args:
         lyrics (str): The lyrics text to preprocess.
 
     Returns:
         list[str]: A list of lemmatized words after tokenization and stopword removal.
+
     """
     """Tokenize, remove stopwords, and lemmatize lyrics."""
     tokenized = word_tokenize(lyrics)
+
     stop_words = set(stopwords.words("english"))
     stop_words.update(ADD_STOP_WORDS)
     stop_words -= REMOVE_STOP_WORDS
+
     filtered = [word for word in tokenized if word.lower() not in stop_words]
-    lemmatized = [lemmatizer.lemmatize(word) for word in filtered]
-    return lemmatized
+    return [lemmatizer.lemmatize(word) for word in filtered]
 
 
 def get_word_frequencies(words: list[str]) -> list[tuple[str, int]]:
-    """
-    Create a frequency distribution of the words.
+    """Create a frequency distribution of the words.
 
     Args:
         words (list[str]): A list of words to analyze.
 
     Returns:
-        list[tuple[str, int]]: A list of tuples where each tuple contains a word and its frequency, 
+        list[tuple[str, int]]: A list of tuples where each tuple contains a word and its frequency,
             sorted by frequency in descending order.
+
     """
     fdist = FreqDist(words)
     return fdist.most_common()
 
 
-def plot_top_words(word_freqs: list[tuple[str, int]], top: int = 70):
-    """
-    Plot a bar chart of the top N most frequent words from a list of word-frequency tuples.
+def plot_top_words(word_freqs: list[tuple[str, int]], top: int = 70) -> None:
+    """Plot a bar chart of the top N most frequent words from a list of word-frequency tuples.
 
     Args:
         word_freqs (list[tuple[str, int]]): A list of tuples where each tuple contains a word and its
@@ -74,7 +72,7 @@ def plot_top_words(word_freqs: list[tuple[str, int]], top: int = 70):
 
     """
     top_words = word_freqs[:top]
-    words, counts = zip(*top_words)
+    words, counts = zip(*top_words, strict=False)
     plt.figure(figsize=(25, 6))
     plt.bar(words, counts)
     plt.title(f"Top {top} Most Frequent Words")
@@ -82,6 +80,7 @@ def plot_top_words(word_freqs: list[tuple[str, int]], top: int = 70):
     plt.xticks(rotation=45, ha="right")
     plt.tight_layout()
     plt.show()
+
 
 if __name__ == "__main__":
     # tests
