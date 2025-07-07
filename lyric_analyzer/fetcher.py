@@ -36,7 +36,11 @@ def get_artist_lyrics(artist_name: str, max_songs: int = 20) -> list[str]:
         include_features=True,
     )
 
-    return [song.lyrics for song in artist.songs] if artist else []
+    if not artist:
+        return []
+
+    raw_lyrics_list = [song.lyrics for song in artist.songs]
+    return clean_lyrics(raw_lyrics_list)
 
 
 def clean_lyrics(lyrics_list: list[str]) -> list[str]:
@@ -54,11 +58,3 @@ def clean_lyrics(lyrics_list: list[str]) -> list[str]:
         first_new_line = lyrics.index("\n")
         cleaned_lyrics_list.append(lyrics[first_new_line + 1 :])
     return cleaned_lyrics_list
-
-
-if __name__ == "__main__":
-    raw_lyrics_list = get_artist_lyrics("The Itchyworms", 5)
-    cleaned_lyrics_list = clean_lyrics(raw_lyrics_list)
-
-    for lyrics in cleaned_lyrics_list:
-        print(lyrics)
