@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 nltk.download("stopwords")
 lemmatizer = WordNetLemmatizer()
 
+REMOVE_STOP_WORDS = {"him"}
+ADD_STOP_WORDS = {",", "'s", "u", "'re", "'m", "'ll", "(", ")"}
+
 
 def combine_lyrics(lyrics_list: list[str]) -> str:
     """Combine a list of lyrics into a single string.
@@ -29,8 +32,8 @@ def preprocess_lyrics(lyrics: str) -> list[str]:
     """Tokenize, remove stopwords, and lemmatize lyrics."""
     tokenized = word_tokenize(lyrics)
     stop_words = set(stopwords.words("english"))
-    stop_words.update({",", "'s", "u", "'re", "'m", "'ll", "(", ")"})
-    stop_words -= {"him"}
+    stop_words.update(ADD_STOP_WORDS)
+    stop_words -= REMOVE_STOP_WORDS
     filtered = [word for word in tokenized if word.lower() not in stop_words]
     lemmatized = [lemmatizer.lemmatize(word) for word in filtered]
     return lemmatized
