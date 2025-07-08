@@ -36,7 +36,6 @@ def preprocess_lyrics(lyrics: str) -> list[str]:
         list[str]: A list of lemmatized words after tokenization and stopword removal.
 
     """
-    """Tokenize, remove stopwords, and lemmatize lyrics."""
     tokenized = word_tokenize(lyrics)
 
     stop_words = set(stopwords.words("english"))
@@ -83,7 +82,15 @@ def plot_top_words(word_freqs: list[tuple[str, int]], top: int = 70) -> None:
 
 
 def analyze_lyrics(lyrics_list: list[str]) -> list[tuple[str, int]]:
-    """Combine lyrics, preprocess, and get word frequencies."""
+    """
+    Analyze a list of song lyrics by combining, preprocessing, and calculating word frequencies.
+
+    Args:
+        lyrics_list (list[str]): A list of strings, each representing song lyrics.
+
+    Returns:
+        list[tuple[str, int]]: A list of tuples where each tuple contains a word and its frequency.
+    """
     full_lyrics = combine_lyrics(lyrics_list)
     lemmatized_lyrics = preprocess_lyrics(full_lyrics)
     sorted_freq = get_word_frequencies(lemmatized_lyrics)
