@@ -1,9 +1,9 @@
-from lyric_analyzer.fetcher import get_artist_lyrics
 from lyric_analyzer.analyzer import analyze_lyrics, plot_top_words
+from lyric_analyzer.fetcher import get_artist_lyrics
 
 
 def main() -> None:
-    """Main function to interactively fetch and analyze song lyrics.
+    """Fetch and analyze song lyrics.
 
     Prompts the user for an artist name, number of songs, and number of top frequent words.
     Fetches lyrics, analyzes word frequency, prints the most frequent words, and plots them.
@@ -11,7 +11,7 @@ def main() -> None:
     """
     while True:
         artist = input("Name of artist (or 'q' to quit): ").strip()
-        if artist.lower() == 'q':
+        if artist.lower() == "q":
             break
 
         try:

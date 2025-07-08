@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import nltk
-from .fetcher import get_artist_lyrics
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.probability import FreqDist
 from nltk.stem import WordNetLemmatizer
+
+from .fetcher import get_artist_lyrics
 
 nltk.download("stopwords")
 lemmatizer = WordNetLemmatizer()
@@ -82,19 +83,18 @@ def plot_top_words(word_freqs: list[tuple[str, int]], top: int = 70) -> None:
 
 
 def analyze_lyrics(lyrics_list: list[str]) -> list[tuple[str, int]]:
-    """
-    Analyze a list of song lyrics by combining, preprocessing, and calculating word frequencies.
+    """Analyze a list of song lyrics by combining, preprocessing, and calculating word frequencies.
 
     Args:
         lyrics_list (list[str]): A list of strings, each representing song lyrics.
 
     Returns:
         list[tuple[str, int]]: A list of tuples where each tuple contains a word and its frequency.
+
     """
     full_lyrics = combine_lyrics(lyrics_list)
     lemmatized_lyrics = preprocess_lyrics(full_lyrics)
-    sorted_freq = get_word_frequencies(lemmatized_lyrics)
-    return sorted_freq
+    return get_word_frequencies(lemmatized_lyrics)
 
 
 if __name__ == "__main__":
