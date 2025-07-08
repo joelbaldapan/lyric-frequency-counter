@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import nltk
-from fetcher import get_artist_lyrics
+from .fetcher import get_artist_lyrics
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.probability import FreqDist
@@ -82,9 +82,17 @@ def plot_top_words(word_freqs: list[tuple[str, int]], top: int = 70) -> None:
     plt.show()
 
 
+def analyze_lyrics(lyrics_list: list[str]) -> list[tuple[str, int]]:
+    """Combine lyrics, preprocess, and get word frequencies."""
+    full_lyrics = combine_lyrics(lyrics_list)
+    lemmatized_lyrics = preprocess_lyrics(full_lyrics)
+    sorted_freq = get_word_frequencies(lemmatized_lyrics)
+    return sorted_freq
+
+
 if __name__ == "__main__":
     # tests
-    lyrics_list = get_artist_lyrics("The Itchyworms", 10)
+    lyrics_list = get_artist_lyrics("Coldplay", 10)
     full_lyrics = combine_lyrics(lyrics_list)
     lemmatized_lyrics = preprocess_lyrics(full_lyrics)
     print(lemmatized_lyrics)
